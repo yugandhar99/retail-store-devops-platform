@@ -1,0 +1,12 @@
+# Rename this file to backend.tf after creating the S3 bucket and DynamoDB lock table.
+# Do not commit real backend bucket names if they are sensitive to your organization.
+
+terraform {
+  backend "s3" {
+    bucket         = "your-terraform-state-bucket"
+    key            = "retail-store-devops/terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}

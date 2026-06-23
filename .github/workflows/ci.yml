@@ -1,0 +1,88 @@
+name: CI Quality Gates
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  terraform-and-helm-validation:
+    name: Terraform, Helm, and YAML Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform format check
+        working-directory: infra
+        run: terraform fmt -check -recursive
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+
+      - name: Helm lint service charts
+        run: |
+          for chart in src/*/chart; do
+            [ -f "$chart/Chart.yaml" ] || continue
+            echo "Linting $chart"
+            helm dependency build "$chart" || true
+            helm lint "$chart"
+          done
+
+      - name: Trivy filesystem scan
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: sarif
+          output: trivy-fs.sarif
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+
+      - name: Upload Trivy SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-fs.sarif
+
+  service-smoke-tests:
+    name: Service Smoke Tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [catalog, checkout]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Go
+        if: matrix.service == 'catalog'
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: src/catalog/go.mod
+
+      - name: Test Catalog service
+        if: matrix.service == 'catalog'
+        working-directory: src/catalog
+        run: go test ./...
+
+      - name: Setup Node
+        if: matrix.service == 'checkout'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: src/checkout/yarn.lock
+
+      - name: Build Checkout service
+        if: matrix.service == 'checkout'
+        working-directory: src/checkout
+        run: |
+          yarn install --frozen-lockfile
+          yarn build

@@ -1,0 +1,13 @@
+aws_region                = "us-west-2"
+cluster_name              = "retail-store"
+environment               = "dev"
+kubernetes_version        = "1.33"
+vpc_cidr                  = "10.0.0.0/16"
+argocd_namespace          = "argocd"
+enable_single_nat_gateway = true
+enable_monitoring         = false
+
+# Optional GitHub OIDC metadata for documentation/workflow setup
+github_owner  = "yugandhar99"
+github_repo   = "retail-store-devops-platform"
+github_branch = "main"
