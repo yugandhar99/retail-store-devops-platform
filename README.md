@@ -1,4 +1,4 @@
-# Retail Store DevOps Platform on AWS EKS
+# Retail Store DevOps  Platform on AWS EKS
 
 ![Retail Store Banner](./docs/images/banner.png)
 
