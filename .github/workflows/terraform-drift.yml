@@ -1,5 +1,4 @@
 name: Terraform Drift Detection
-
 on:
   workflow_dispatch:
   schedule:
