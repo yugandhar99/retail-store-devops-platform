@@ -1,5 +1,4 @@
 # Build Stage
-
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023 AS build-env
 
 # We tell DNF not to install Recommends and Suggests packages, which are
