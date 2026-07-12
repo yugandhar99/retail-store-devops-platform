@@ -1,5 +1,4 @@
 name: CodeQL Security Analysis
-
 on:
   pull_request:
     branches: [main]
