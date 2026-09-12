@@ -1,4 +1,4 @@
-name: Build and Deploy Retail Store Services
+name: Build and Deploy Retail Store Services 
 
 on:
   push:
