@@ -1,4 +1,4 @@
-aws_region                = "us-west-2" 
+aws_region                = "us-west-2"
 cluster_name              = "retail-store"
 environment               = "dev"
 kubernetes_version        = "1.33"
