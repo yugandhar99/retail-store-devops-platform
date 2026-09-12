@@ -1,4 +1,4 @@
-# Rename this file to backend.tf after creating the S3 bucket and DynamoDB lock table.
+# Rename this file to backend.tf after creating the S3 bucket and DynamoDB lock table. 
 # Do not commit real backend bucket names if they are sensitive to your organization.
 
 terraform {
