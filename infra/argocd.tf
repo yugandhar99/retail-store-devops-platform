@@ -1,5 +1,5 @@
 # =============================================================================
-# ARGOCD INSTALLATION AND CONFIGURATION
+# ARGOCD INSTALLATION AND CONFIGURATION 
 # =============================================================================
 
 # Wait for the cluster and add-ons to be ready
