@@ -1,5 +1,5 @@
 # =============================================================================
-# SECURITY GROUPS AND RULES
+# SECURITY GROUPS AND RULES 
 # =============================================================================
 
 # Allow HTTP/HTTPS traffic from internet to load balancer
