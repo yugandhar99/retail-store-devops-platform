@@ -3,7 +3,7 @@
 # =============================================================================
 
 # Allow HTTP/HTTPS traffic from internet to load balancer
-resource "aws_security_group_rule" "internet_to_lb_http" {
+resource "aws_security_group_rule" "internet_to_lb_http" { 
   description       = "Allow HTTP traffic from internet to LoadBalancer"
   type              = "ingress"
   from_port         = 80
